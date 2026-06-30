@@ -64,8 +64,8 @@ int main(void)
   /* Configure the system clock to 64 MHz */
   SystemClock_Config();
 
-  /* Unlock the Flash Program Erase controller */
-  HAL_FLASH_Unlock();
+  /* Flash is unlocked/locked automatically inside the EEPROM driver APIs */
+  /* HAL_FLASH_Unlock(); */
 
   /* EEPROM Init */
   EE_Init();

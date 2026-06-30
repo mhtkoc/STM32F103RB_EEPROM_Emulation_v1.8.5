@@ -36,11 +36,21 @@ extern uint16_t VirtAddVarTab[NB_OF_VAR];
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
+static uint16_t EE_Init_Internal(void);
 static HAL_StatusTypeDef EE_Format(void);
 static uint16_t EE_FindValidPage(uint8_t Operation);
 static uint16_t EE_VerifyPageFullWriteVariable(uint16_t VirtAddress, uint16_t Data);
 static uint16_t EE_PageTransfer(uint16_t VirtAddress, uint16_t Data);
 static uint16_t EE_VerifyPageFullyErased(uint32_t Address);
+
+uint16_t EE_Init(void)
+{
+  uint16_t status;
+  HAL_FLASH_Unlock();
+  status = EE_Init_Internal();
+  HAL_FLASH_Lock();
+  return status;
+}
 
 /**
   * @brief  Restore the pages to a known good state in case of page's status
@@ -49,7 +59,7 @@ static uint16_t EE_VerifyPageFullyErased(uint32_t Address);
   * @retval - Flash error code: on write Flash error
   *         - FLASH_COMPLETE: on success
   */
-uint16_t EE_Init(void)
+static uint16_t EE_Init_Internal(void)
 {
   uint16_t pagestatus0 = 6, pagestatus1 = 6;
   uint16_t varidx = 0;
@@ -407,6 +417,9 @@ uint16_t EE_WriteVariable(uint16_t VirtAddress, uint16_t Data)
 {
   uint16_t Status = 0;
 
+  /* Unlock the Flash Program Erase controller */
+  HAL_FLASH_Unlock();
+
   /* Write the variable virtual address and value in the EEPROM */
   Status = EE_VerifyPageFullWriteVariable(VirtAddress, Data);
 
@@ -416,6 +429,9 @@ uint16_t EE_WriteVariable(uint16_t VirtAddress, uint16_t Data)
     /* Perform Page transfer */
     Status = EE_PageTransfer(VirtAddress, Data);
   }
+
+  /* Lock the Flash Program Erase controller */
+  HAL_FLASH_Lock();
 
   /* Return last operation status */
   return Status;
