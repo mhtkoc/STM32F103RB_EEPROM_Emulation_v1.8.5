@@ -90,9 +90,9 @@ This wear-leveling dramatically increases the lifetime of the Flash memory by av
 The project has a modular layout containing driver files and the demo application:
 
 ```
-STM32F103RB_EEPROM_EEPROM_Emulation_v1.8.5/
+STM32F103RB_EEPROM_Emulation_v1.8.5/
 │
-├── Readma.md                          # Repository documentation (this file)
+├── Readme.md                          # Repository documentation (this file)
 ├── main.c                             # Application entry point & demo test-bench
 │
 └── eepromEmulationDrivers/
@@ -106,7 +106,7 @@ STM32F103RB_EEPROM_EEPROM_Emulation_v1.8.5/
 
 ## 🔌 API Reference
 
-The driver provides three primary functions declared in [eeprom.h](STM32F103RB_EEPROM_EEPROM_Emulation_v1.8.5/eepromEmulationDrivers/Inc/eeprom.h):
+The driver provides three primary functions declared in [eeprom.h](eepromEmulationDrivers/Inc/eeprom.h):
 
 ### 1. Initialize EEPROM
 ```c
@@ -142,7 +142,7 @@ uint16_t EE_WriteVariable(uint16_t VirtAddress, uint16_t Data);
 
 ## 💻 Usage and Example Application
 
-A demonstration of writing and reading variables is implemented in [main.c](STM32F103RB_EEPROM_EEPROM_Emulation_v1.8.5/main.c).
+A demonstration of writing and reading variables is implemented in [main.c](main.c).
 
 ### Virtual Variable Definition
 ```c
